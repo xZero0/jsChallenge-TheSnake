@@ -21,7 +21,7 @@ function draw() {
   fl1.draw();
 
   if(sn1.getFood(fl1)){
-    fl1 = new food(sysBlocksize);
+    initFood(sysBlocksize);
   }
 
   isOutScreen();
@@ -29,11 +29,13 @@ function draw() {
 }
 
 function isDeath(){
-  for(let i=0; i < sn1.tail.length; i++){
-    if(dist(sn1.x, sn1.y, sn1.tail[i].x, sn1.tail[i].y) < sysBlocksize){
-      initSnake();
-    } 
-  }
+  if(sn1.isTail(sn1.x, sn1.y)){
+    initSnake();
+  } 
+}
+
+function isFoodOnSnake(){
+  return sn1.isTail(fl1.x, fl1.y);
 }
 
 function isOutScreen(){
@@ -63,8 +65,8 @@ function keyPressed() {
 }
 
 function initSnake(){
-  snHeadx = int(random(0, 400)/sysBlocksize);
-  snHeady = int(random(0, 400)/sysBlocksize);
+  snHeadx = constrain(random(0, sysWidth/sysBlocksize), 0, sysWidth);
+  snHeady = constrain(random(0, sysHight/sysBlocksize), 0, sysHight);
   snBody= 10;
 
   sn1 = new snake(2);
@@ -74,14 +76,17 @@ function initSnake(){
 
 function initFood(){
   fl1 = new food(sysBlocksize);
+  if(isFoodOnSnake()){
+    fl1 = new food(sysBlocksize);
+  }
 }
 
 class food {
   constructor(size){
     this.bsize = size;
 
-    this.x = int(random(0, 40)*size);
-    this.y = int(random(0, 40)*size);
+    this.x = int(random(0, 40))*sysBlocksize;
+    this.y = int(random(0, 40))*sysBlocksize;
     print("Create new flood at :" + this.x +", "+this.y);
   }
   draw(){

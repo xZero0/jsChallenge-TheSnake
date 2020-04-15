@@ -23,6 +23,15 @@ class snake {
     this.bsize = inSize;
   }
 
+  isTail(inx, iny){
+    for(let i=0; i<this.tail.length; i++){
+      if(dist(inx, iny, this.tail[i].x, this.tail[i].y) < this.bsize){
+        return true;
+      }
+    }
+    return false;
+  }
+
   getFood(po){
     var dis = dist(this.x, this.y, po.x, po.y);
     if(dis < this.bsize){
