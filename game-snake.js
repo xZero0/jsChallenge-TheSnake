@@ -2,36 +2,12 @@ sysBlocksize = 10;
 sysWidth = 400;
 sysHight = 400;
 
-snArray = [];
-
-function setup() {
-  createCanvas(sysWidth, sysHight);
-  frameRate(10);
-
-  initSnake(sysBlocksize);
-  initFood(sysBlocksize);
-}
-
-function draw() {
-  background(40);
-
-  sn1.draw();
-  sn1.update();
-
-  fl1.draw();
-
-  if(sn1.getFood(fl1)){
-    initFood(sysBlocksize);
-  }
-
-  isOutScreen();
-  isDeath();
-}
-
 function isDeath(){
   if(sn1.isTail(sn1.x, sn1.y)){
     initSnake();
+    return true;
   } 
+  return false;
 }
 
 function isFoodOnSnake(){
@@ -79,6 +55,8 @@ function initFood(){
   if(isFoodOnSnake()){
     fl1 = new food(sysBlocksize);
   }
+
+  print("Create new flood at :" + fl1.x +", "+ fl1.y + ", [" + score +"]");
 }
 
 class food {
@@ -87,7 +65,6 @@ class food {
 
     this.x = int(random(0, 40))*sysBlocksize;
     this.y = int(random(0, 40))*sysBlocksize;
-    print("Create new flood at :" + this.x +", "+this.y);
   }
   draw(){
     fill(color(255,0,0));
