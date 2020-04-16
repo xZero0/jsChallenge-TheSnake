@@ -25,19 +25,15 @@
 		  fl1.draw();
 
 		  if(sn1.getFood(fl1)){
-		  	score++;
+		  	score = score + fl1.score;
 		    initFood(sysBlocksize);
 		  }
 
 		  updateLabels(score);
 
-		  isOutScreen();
-		  if(isDeath()){
-		  	if(score > maxscore){
-		  		maxscore = score;
-		  	}
-		  	score = 0;
-		  }
+		  checkOutScreen();
+		  checkDeath();
+		  checkLavel();
 		}
     </script>
     <script>

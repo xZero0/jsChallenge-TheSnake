@@ -2,19 +2,17 @@ sysBlocksize = 10;
 sysWidth = 400;
 sysHight = 400;
 
-function isDeath(){
+function checkDeath(){
   if(sn1.isTail(sn1.x, sn1.y)){
     initSnake();
-    return true;
   } 
-  return false;
 }
 
 function isFoodOnSnake(){
   return sn1.isTail(fl1.x, fl1.y);
 }
 
-function isOutScreen(){
+function checkOutScreen(){
   if(sn1.x < 0){
     sn1.setLocation(sysWidth-sysBlocksize, sn1.y);
   } else if (sn1.x > sysWidth-sysBlocksize){
@@ -25,6 +23,18 @@ function isOutScreen(){
     sn1.setLocation(sn1.x, sysWidth-sysBlocksize);
   } else if (sn1.y > sysWidth-sysBlocksize){
     sn1.setLocation(sn1.x, 0);
+  }
+}
+
+function checkLavel(){
+  if(score >= 10){
+    frameRate(11);
+  } else if(score >= 20){
+    frameRate(15);
+  } else if(score >= 50){
+    frameRate(20);
+  } else if(score >= 100){
+    frameRate(25);
   }
 }
 
@@ -41,13 +51,17 @@ function keyPressed() {
 }
 
 function initSnake(){
-  snHeadx = constrain(random(0, sysWidth/sysBlocksize), 0, sysWidth);
-  snHeady = constrain(random(0, sysHight/sysBlocksize), 0, sysHight);
-  snBody= 10;
+  snHeadx = int(random(0, 40)*sysBlocksize);
+  snHeady = int(random(0, 40)*sysBlocksize);
 
   sn1 = new snake(2);
   sn1.setBlockSize(sysBlocksize);
   sn1.setLocation(snHeadx, snHeady);
+
+  if(score > maxscore){
+    maxscore = score;
+  }
+  score = 0;
 }
 
 function initFood(){
@@ -55,13 +69,12 @@ function initFood(){
   if(isFoodOnSnake()){
     fl1 = new food(sysBlocksize);
   }
-
-  print("Create new flood at :" + fl1.x +", "+ fl1.y + ", [" + score +"]");
 }
 
 class food {
   constructor(size){
     this.bsize = size;
+    this.score = 1;
 
     this.x = int(random(0, 40))*sysBlocksize;
     this.y = int(random(0, 40))*sysBlocksize;
