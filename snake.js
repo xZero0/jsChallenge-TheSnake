@@ -1,5 +1,5 @@
 class snake {
-  constructor(inlength){
+  constructor(){
     this.bsize = 10;
     this.tail = [];
     this.x = 0;
@@ -8,7 +8,7 @@ class snake {
     this.xmove = 1;
     this.ymove = 0;
 
-    this.length = inlength;
+    this.length = 2;
     for(let i = 0; i < this.length; i++){
       append(this.tail, createVector(this.x, this.y));
     }
