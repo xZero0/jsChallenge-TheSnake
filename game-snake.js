@@ -17,13 +17,15 @@ function setup() {
     sysHeight = w;
   }
 
-  if(sysWidth > 600){
+  sysBlocksize = 10*window.devicePixelRatio;
+  if(sysWidth/sysBlocksize > 60){
     sysWidth = 600;
     sysHeight = 600;
   }
 
-  sysBlocksize = sysWidth/sysTotalBlock;
+  sysTotalBlock = sysWidth/sysBlocksize;
 
+  print("Game screen : "+sysWidth+":"+  window.devicePixelRatio);
   canvas = createCanvas(sysWidth, sysHeight);
   canvas.parent('sketch-div');
   frameRate(10);
@@ -109,6 +111,11 @@ function keyPressed() {
   } else if (keyCode === 188) { //Counter clockwise play by ',' ( < key)
     sn1.movecc();
   }
+}
+
+//Clockwise play by mouseClicked
+function mouseClicked() {
+  sn1.movec();
 }
 
 function initSnake(){
