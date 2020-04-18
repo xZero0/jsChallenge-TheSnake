@@ -53,6 +53,24 @@ class snake {
       this.ymove = iny;
     }  
   }
+  
+  movec(){
+    if(this.xmove > 0 && this.ymove == 0){
+      this.xmove = 0;
+      this.ymove = 1;
+    } else if(this.xmove < 0 && this.ymove == 0){
+      this.xmove = 0;
+      this.ymove = -1;
+    }
+
+    if(this.ymove > 0 && this.xmove == 0){
+      this.xmove = -1;
+      this.ymove = 0;
+    } else if(this.ymove < 0 && this.xmove == 0){
+      this.xmove = 1;
+      this.ymove = 0;
+    }
+  }
 
   update(){
     for(let i = 0; i < this.tail.length-1; i++){

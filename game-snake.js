@@ -47,6 +47,8 @@ function keyPressed() {
     sn1.move(0, -1);
   } else if (keyCode === DOWN_ARROW) {
     sn1.move(0, 1);
+  } else if (keyCode === 32) {
+    sn1.movec();
   }
 }
 
