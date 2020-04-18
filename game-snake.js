@@ -25,7 +25,6 @@ function setup() {
 
   sysTotalBlock = sysWidth/sysBlocksize;
 
-  print("Game screen : "+sysWidth+":"+  window.devicePixelRatio);
   canvas = createCanvas(sysWidth, sysHeight);
   canvas.parent('sketch-div');
   frameRate(10);
