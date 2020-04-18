@@ -1,9 +1,64 @@
+
+sysTotalBlock = 60;
 sysBlocksize = 10;
-sysWidth = 400;
-sysHight = 400;
+sysWidth = 500;
+sysWidth = 500;
+
+
+function setup() {
+  var w = innerWidth;
+  var h = innerHeight;
+  
+  if(w > h){
+    sysWidth = h;
+    sysHeight = h;
+  } else {
+    sysWidth = w;
+    sysHeight = w;
+  }
+
+  if(sysWidth > 600){
+    sysWidth = 600;
+    sysHeight = 600;
+  }
+
+  sysBlocksize = sysWidth/sysTotalBlock;
+
+  canvas = createCanvas(sysWidth, sysHeight);
+  canvas.parent('sketch-div');
+  frameRate(10);
+
+  score = 0;
+  maxscore = 0;
+
+  initSnake(sysBlocksize);
+  initFood(sysBlocksize);
+}
+
+function draw() {
+  background(40);
+
+  sn1.draw();
+  fl1.draw();
+
+  if(sn1.getFood(fl1)){
+    score = score + fl1.score;
+    initFood(sysBlocksize);
+  }
+
+  updateLabels(score);
+
+  checkOutScreen();
+  checkLavel();
+
+  checkDeath();
+  sn1.update();
+}
 
 function checkDeath(){
-  if(sn1.isTail(sn1.x, sn1.y)){
+  var x = sn1.x;
+  var y = sn1.y;
+  if(sn1.isTail(x, y)){
     initSnake();
   } 
 }
@@ -53,10 +108,10 @@ function keyPressed() {
 }
 
 function initSnake(){
-  snHeadx = int(random(0, 40)*sysBlocksize);
-  snHeady = int(random(0, 40)*sysBlocksize);
+  snHeadx = int(random(0, sysTotalBlock)*sysBlocksize);
+  snHeady = int(random(0, sysTotalBlock)*sysBlocksize);
 
-  sn1 = new snake(2);
+  sn1 = new snake();
   sn1.setBlockSize(sysBlocksize);
   sn1.setLocation(snHeadx, snHeady);
 
@@ -67,22 +122,23 @@ function initSnake(){
 }
 
 function initFood(){
-  fl1 = new food(sysBlocksize);
+  fl1 = new food(sysTotalBlock, sysBlocksize);
   if(isFoodOnSnake()){
-    fl1 = new food(sysBlocksize);
+    fl1 = new food(sysTotalBlock, sysBlocksize);
   }
 }
 
 class food {
-  constructor(size){
-    this.bsize = size;
+  constructor(totalblock, blocksize){
+    this.bsize = blocksize;
     this.score = 1;
 
-    this.x = int(random(0, 40))*sysBlocksize;
-    this.y = int(random(0, 40))*sysBlocksize;
+    this.x = int(random(0, totalblock-1))*this.bsize;
+    this.y = int(random(0, totalblock-1))*this.bsize;
   }
+
   draw(){
     fill(color(255,0,0));
-    rect(this.x, this.y, 10, 10);
+    rect(this.x, this.y, this.bsize, this.bsize);
   }
 }

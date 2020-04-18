@@ -1,56 +1,26 @@
 <html>
   <head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
     <script src="game-snake.js"></script>
     <script src="snake.js"></script>
     <script>
-		function setup() {
-		  var canvas = createCanvas(sysWidth, sysHight);
-		  canvas.parent('sketch-div');
-		  frameRate(10);
-
-		  score = 0;
-		  maxscore = 0;
-
-		  initSnake(sysBlocksize);
-		  initFood(sysBlocksize);
-		}
-
-		function draw() {
-		  background(40);
-
-		  sn1.draw();
-		  sn1.update();
-
-		  fl1.draw();
-
-		  if(sn1.getFood(fl1)){
-		  	score = score + fl1.score;
-		    initFood(sysBlocksize);
-		  }
-
-		  updateLabels(score);
-
-		  checkOutScreen();
-		  checkDeath();
-		  checkLavel();
-		}
-    </script>
-    <script>
       function updateLabels(score){
         var sLabel = document.getElementById('score-label');
-        sLabel.innerHTML = 'Your score: ' + score;
-
-        if(maxscore != 0){
-			var msLabel = document.getElementById('mscore-label');
-        	msLabel.innerHTML = 'Your max score: ' + maxscore;
-        }
+		sLabel.innerHTML = 'HI : ' + maxscore + ",   " + score;			
       }
     </script>
 
   </head>
-  <body>
- 	<div id="sketch-div"></div>
-    <p id="score-label"></p>
-    <p id="mscore-label"></p>
+  <body>	
+	<div class="max-width: 100%; text-center bg-dark" id="sketch-div"></div>
+	 
+	<div class="container">
+		<p class="lead" id="score-label"></p>
+		<p>Tap to play.</p>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </html>
