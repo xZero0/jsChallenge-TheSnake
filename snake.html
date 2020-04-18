@@ -7,31 +7,17 @@
     <script>
       function updateLabels(score){
         var sLabel = document.getElementById('score-label');
-        sLabel.innerHTML = 'Your score: ' + score;
-
-        if(maxscore != 0){
-			var msLabel = document.getElementById('mscore-label');
-        	msLabel.innerHTML = 'Your max score: ' + maxscore;
-        }
+		sLabel.innerHTML = 'HI : ' + maxscore + ",   " + score;			
       }
     </script>
 
   </head>
-  <body>
-	<nav class="navbar fixed-top navbar-dark bg-primary">
-		<a class="navbar-brand" href="#">
-			The Snake
-		</a>
-	</nav>
-	
+  <body>	
 	<div class="max-width: 100%; text-center bg-dark" id="sketch-div"></div>
 	 
 	<div class="container">
 		<p class="lead" id="score-label"></p>
-		<p class="lead" id="mscore-label"></p>
-
-		<p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-		<a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+		<p>Tap to play.</p>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

@@ -17,10 +17,10 @@ function setup() {
     sysHeight = w;
   }
 
-  if(sysWidth > 800){
-    sysWidth = 800;
-    sysHeight = 800;
-  }	
+  if(sysWidth > 600){
+    sysWidth = 600;
+    sysHeight = 600;
+  }
 
   sysBlocksize = sysWidth/sysTotalBlock;
 
@@ -39,8 +39,6 @@ function draw() {
   background(40);
 
   sn1.draw();
-  sn1.update();
-
   fl1.draw();
 
   if(sn1.getFood(fl1)){
@@ -51,8 +49,10 @@ function draw() {
   updateLabels(score);
 
   checkOutScreen();
-  checkDeath();
   checkLavel();
+
+  checkDeath();
+  sn1.update();
 }
 
 function checkDeath(){

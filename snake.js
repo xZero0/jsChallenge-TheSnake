@@ -25,7 +25,7 @@ class snake {
 
   isTail(inx, iny){
     for(let i=0; i<this.tail.length; i++){
-      if(dist(inx, iny, this.tail[i].x, this.tail[i].y) < this.bsize){
+      if(dist(inx, iny, this.tail[i].x, this.tail[i].y) < this.bsize/2){
         return true;
       }
     }
