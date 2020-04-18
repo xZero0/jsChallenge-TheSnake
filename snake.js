@@ -55,20 +55,42 @@ class snake {
   }
   
   movec(){
-    if(this.xmove > 0 && this.ymove == 0){
-      this.xmove = 0;
-      this.ymove = 1;
-    } else if(this.xmove < 0 && this.ymove == 0){
-      this.xmove = 0;
-      this.ymove = -1;
+    if(this.xmove == 0){
+      if(this.ymove > 0){
+        this.xmove = -1;
+        this.ymove = 0;
+      } else {
+        this.xmove = 1;
+        this.ymove = 0;
+      } 
+    } else {
+      if(this.xmove < 0 ){
+        this.xmove = 0;
+        this.ymove = -1;
+      } else {
+        this.xmove = 0;
+        this.ymove = 1;
+      } 
     }
+  }
 
-    if(this.ymove > 0 && this.xmove == 0){
-      this.xmove = -1;
-      this.ymove = 0;
-    } else if(this.ymove < 0 && this.xmove == 0){
-      this.xmove = 1;
-      this.ymove = 0;
+  movecc(){
+    if(this.xmove == 0){
+      if(this.ymove > 0){
+        this.xmove = 1;
+        this.ymove = 0;
+      } else {
+        this.xmove = -1;
+        this.ymove = 0;
+      } 
+    } else {
+      if(this.xmove < 0 ){
+        this.xmove = 0;
+        this.ymove = 1;
+      } else {
+        this.xmove = 0;
+        this.ymove = -1;
+      } 
     }
   }
 

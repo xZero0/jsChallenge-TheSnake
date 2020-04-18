@@ -102,8 +102,12 @@ function keyPressed() {
     sn1.move(0, -1);
   } else if (keyCode === DOWN_ARROW) {
     sn1.move(0, 1);
-  } else if (keyCode === 32) {
+  } else if (keyCode === 190) { //Clockwise play by '.' ( > key)
     sn1.movec();
+  } else if (keyCode === 32) { //Clockwise play by ' ' or space bar
+    sn1.movec();
+  } else if (keyCode === 188) { //Counter clockwise play by ',' ( < key)
+    sn1.movecc();
   }
 }
 
