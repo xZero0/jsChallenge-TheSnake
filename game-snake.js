@@ -21,21 +21,9 @@ function setup() {
     sysHeight = w;
   }
 
-  sysBlocksize = 10*window.devicePixelRatio;
-  if(sysWidth/sysBlocksize > 60){
-    sysWidth = 600;
-    sysHeight = 600;
-  }
-
-  sysTotalBlock = sysWidth/sysBlocksize;
-
-  canvas = createCanvas(sysWidth, sysHeight);
-  canvas.parent('sketch-div');
-  frameRate(10);
-
-  score = 0;
   maxscore = 0;
 
+  initGame();
   initSnake();
   initFood();
   initBonusFood();
@@ -64,7 +52,7 @@ function draw() {
   if(sysBonusFag == 2){
     if(sn1.getFood(bo1)){
       score = score + bo1.score;
-      sn1.heal(bo1.score*50);
+      sn1.heal(bo1.score*30);
       initBonusFood();
     }
   }
@@ -108,8 +96,20 @@ function checkDeath(){
 }
 
 function gameOver(){
+
+  fill(255);
+  t1 = createElement('h2', 'Game is over!!!');
+  t1.position(sysWidth*0.5, sysHeight*0.5-10);
+  t2 = createElement('p', 'Your score was ' + score);
+  t2.position(sysWidth*0.5, sysHeight*0.5);
+
+  button = createButton('Start');
+  button.position(sysWidth*0.5, sysHeight*0.5+15);
+  button.mousePressed(initGame);
+
   noLoop();
 }
+
 function isFoodOnSnake(inf){
   return sn1.isTail(inf.x, inf.y);
 }
@@ -155,12 +155,35 @@ function keyPressed() {
     sn1.movec();
   } else if (keyCode === 188) { //Counter clockwise play by ',' ( < key)
     sn1.movecc();
+  } else if (key === 's') { 
+    initGame();
+    initSnake();
   }
 }
 
 //Clockwise play by mouseClicked
 function mouseClicked() {
   sn1.movec();
+}
+
+function initGame(){
+  sysBlocksize = 10*window.devicePixelRatio;
+  if(sysWidth/sysBlocksize > 60){
+    sysWidth = 600;
+    sysHeight = 600;
+  }
+
+  sysTotalBlock = sysWidth/sysBlocksize;
+  canvas = createCanvas(sysWidth, sysHeight);
+  canvas.parent('sketch-div');
+  frameRate(10);
+
+  score = 0;
+  sysOverGame = 0;
+  sysBonusFag = 0;
+  sysC19Fag = 0;
+  
+  loop();
 }
 
 function initSnake(){
@@ -170,12 +193,13 @@ function initSnake(){
   sn1 = new snake();
   sn1.setBlockSize(sysBlocksize);
   sn1.setLocation(snHeadx, snHeady);
-  sn1.infect = 0;
+
 
   if(score > maxscore){
     maxscore = score;
   }
   score = 0;
+  sn1.infect = 0;
 }
 
 function initFood(){

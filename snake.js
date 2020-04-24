@@ -214,6 +214,14 @@ class covid19food extends food {
     
     fill(c);
     rect(this.x, this.y, this.bsize+this.bring, this.bsize+this.bring);
-
+    
+    
+    c = color('rgba(100%,0%,100%,0.3)');
+    fill(c);
+    let b = this.bsize*0.3;
+    rect(this.x-b, this.y-b, b*2, b*2);
+    rect(this.x-b+this.bsize+this.bring, this.y-b, b*2, b*2);
+    rect(this.x-b+this.bsize+this.bring, this.y-b+this.bsize+this.bring, b*2, b*2);
+    rect(this.x-b, this.y-b+this.bsize+this.bring, b*2, b*2);
   }
 }
