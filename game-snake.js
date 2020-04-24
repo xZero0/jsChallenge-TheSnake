@@ -3,7 +3,8 @@ sysTotalBlock = 60;
 sysBlocksize = 10;
 sysWidth = 500;
 sysWidth = 500;
-
+sysBonusFag = 0;
+sysC19Fag = 0;
 
 function setup() {
   var w = innerWidth;
@@ -32,8 +33,10 @@ function setup() {
   score = 0;
   maxscore = 0;
 
-  initSnake(sysBlocksize);
-  initFood(sysBlocksize);
+  initSnake();
+  initFood();
+  initBonusFood();
+  initCovidFood();
 }
 
 function draw() {
@@ -41,11 +44,35 @@ function draw() {
 
   sn1.draw();
   fl1.draw();
+  if(sysBonusFag == 2){
+    bo1.draw();
+  }
+  if(sysC19Fag == 2){
+    c19.draw();
+  }
+
 
   if(sn1.getFood(fl1)){
     score = score + fl1.score;
-    initFood(sysBlocksize);
+    initFood();
   }
+
+  if(sysBonusFag == 2){
+    if(sn1.getFood(bo1)){
+      score = score + bo1.score;
+      initBonusFood();
+    }
+  }
+
+  if(sysC19Fag == 2){
+    if(sn1.getFood(c19)){
+      score = score + c19.score;
+      initCovidFood();
+    }
+  }
+
+  updateBonus();
+  updateCovid();
 
   updateLabels(score);
 
@@ -64,8 +91,8 @@ function checkDeath(){
   } 
 }
 
-function isFoodOnSnake(){
-  return sn1.isTail(fl1.x, fl1.y);
+function isFoodOnSnake(inf){
+  return sn1.isTail(inf.x, inf.y);
 }
 
 function checkOutScreen(){
@@ -133,22 +160,50 @@ function initSnake(){
 
 function initFood(){
   fl1 = new food(sysTotalBlock, sysBlocksize);
-  if(isFoodOnSnake()){
+  if(isFoodOnSnake(fl1)){
     fl1 = new food(sysTotalBlock, sysBlocksize);
   }
 }
 
-class food {
-  constructor(totalblock, blocksize){
-    this.bsize = blocksize;
-    this.score = 1;
-
-    this.x = int(random(0, totalblock-1))*this.bsize;
-    this.y = int(random(0, totalblock-1))*this.bsize;
+function initBonusFood(){  
+  bo1 = new bonusfood(sysTotalBlock, sysBlocksize);
+  if(isFoodOnSnake(bo1)){
+    bo1 = new bonusfood(sysTotalBlock, sysBlocksize);
   }
-
-  draw(){
-    fill(color(255,0,0));
-    rect(this.x, this.y, this.bsize, this.bsize);
-  }
+  bo1.time = int(random(80,120));
+  sysBonusFag = 1;
 }
+
+function initCovidFood(){
+  c19 = new covid19food(sysTotalBlock, sysBlocksize);
+  if(isFoodOnSnake(c19)){
+    c19 = new covid19food(sysTotalBlock, sysBlocksize);
+  }
+  c19.time = int(random(120,140));
+  sysC19Fag = 1;
+}
+
+function updateBonus(){
+  if(score > 1) {
+    if(bo1.time == 60){
+      sysBonusFag = 2;
+    } else if(bo1.time == 0){
+      initBonusFood();
+    }
+
+    bo1.time = bo1.time - 1;
+  } 
+}
+
+function updateCovid(){
+  if(score > 1) {
+    if(c19.time == 60){
+      sysC19Fag = 2;
+    } else if(c19.time == 0){
+      initCovidFood();
+    }
+
+    c19.time = c19.time - 1;
+  } 
+}
+
