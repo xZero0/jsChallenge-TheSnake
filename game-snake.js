@@ -5,10 +5,13 @@ sysWidth = 500;
 sysWidth = 500;
 sysBonusFag = 0;
 sysC19Fag = 0;
+sysOverGame = 0;
 
 function setup() {
   var w = innerWidth;
   var h = innerHeight;
+
+  sysOverGame = 1;
   
   if(w > h){
     sysWidth = h;
@@ -54,12 +57,14 @@ function draw() {
 
   if(sn1.getFood(fl1)){
     score = score + fl1.score;
+    sn1.heal(fl1.score*10);
     initFood();
   }
 
   if(sysBonusFag == 2){
     if(sn1.getFood(bo1)){
       score = score + bo1.score;
+      sn1.heal(bo1.score*50);
       initBonusFood();
     }
   }
@@ -67,6 +72,7 @@ function draw() {
   if(sysC19Fag == 2){
     if(sn1.getFood(c19)){
       score = score + c19.score;
+      sn1.setInfection();
       initCovidFood();
     }
   }
@@ -86,11 +92,24 @@ function draw() {
 function checkDeath(){
   var x = sn1.x;
   var y = sn1.y;
+
+  if(sysOverGame > 0){
+    //gameOver();
+    sysOverGame = 0;
+  }
+
   if(sn1.isTail(x, y)){
-    initSnake();
+    gameOver();
   } 
+
+  if(sn1.infect > 200){
+    gameOver();
+  }
 }
 
+function gameOver(){
+  noLoop();
+}
 function isFoodOnSnake(inf){
   return sn1.isTail(inf.x, inf.y);
 }
@@ -151,6 +170,7 @@ function initSnake(){
   sn1 = new snake();
   sn1.setBlockSize(sysBlocksize);
   sn1.setLocation(snHeadx, snHeady);
+  sn1.infect = 0;
 
   if(score > maxscore){
     maxscore = score;

@@ -5,6 +5,9 @@ class snake {
     this.x = 0;
     this.y = 0;
 
+    this.infect = 0;
+    this.time = 0;
+
     this.xmove = 1;
     this.ymove = 0;
 
@@ -40,6 +43,22 @@ class snake {
     } else {
       return false;
     }
+  }
+
+  setInfection(){
+    this.infect++;
+  }
+  
+  getInfection(){
+    if(this.infect > 0){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  cleanInfection(){
+    this.infect = 0;
   }
 
   move(inx, iny){
@@ -94,11 +113,23 @@ class snake {
     }
   }
 
+  heal(score){
+    this.infect = this.infect - score;
+
+    if(this.infect < 0){
+      this.cleanInfection();
+    }
+  }
+
   update(){
     for(let i = 0; i < this.tail.length-1; i++){
       this.tail[i] = this.tail[i+1];
     }
     this.tail[this.length-1] = createVector(this.x, this.y);
+
+    if(this.infect > 0){
+      this.infect++;
+    }
 
     this.x = this.x + this.xmove*this.bsize;
     this.y = this.y + this.ymove*this.bsize;
@@ -106,7 +137,13 @@ class snake {
 
   draw(){
     fill(200);
+    let c = color(100, 50, 150);
+
     for(let i = 0; i < this.tail.length; i++){
+      if(this.getInfection()){
+        c.setAlpha(128 + 128 * sin(this.infect));
+        fill(c);
+      }
       rect(this.tail[i].x, this.tail[i].y, this.bsize, this.bsize);
     }
     
